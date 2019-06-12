@@ -24,7 +24,7 @@ public class QuestionEntity {
 	
 	private String title; 
 	
-	@ManyToOne
+	@ManyToOne //조인연산해서 한사람이 여러개의 질의를 할 수 있다.
 	@JoinColumn(name="fk_question_writer")
 	private UserEntity writer;	
 
