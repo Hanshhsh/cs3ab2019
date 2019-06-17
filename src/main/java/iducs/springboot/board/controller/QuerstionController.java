@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import iducs.springboot.board.domain.Answer;
 import iducs.springboot.board.domain.Question;
 import iducs.springboot.board.domain.User;
 import iducs.springboot.board.exception.ResourceNotFoundException;
@@ -49,14 +50,14 @@ public class QuerstionController {
 		return "redirect:/questions"; // get 방식으로  리다이렉션 - Controller를 통해 접근
 	}
 	
+
 	@GetMapping("/{id}")
-	public String getQuestionById(@PathVariable(value = "id") Long id, Model model, HttpSession session) {
-		if(HttpSessionUtils.isEmpty(session, "user")) 
-			return "redirect:/users/login-form";
+	public String getQuestionById(@PathVariable(value = "id") Long id, Model model) {
 		Question question = questionService.getQuestionById(id);
-		if(HttpSessionUtils.isSameUser((User)session.getAttribute("user"), question.getWriter())) {
-			model.addAttribute("same", question.getWriter());
-		}
+		/*
+		for(Answer answer : question.getAnswers())
+			System.out.println(answer.getContents());
+		*/
 		model.addAttribute("question", question);
 		return "/questions/info";
 	}
